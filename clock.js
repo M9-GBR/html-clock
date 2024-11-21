@@ -134,6 +134,8 @@ class Clock {
         this.makeBody()
         this.timeData.update()
         this.drawHands()
+
+        new Audio('tick1.mp3').play()
     }
 
     drawHands() {
