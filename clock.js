@@ -1,6 +1,15 @@
 class Clock {
     _width = 500
     radius = this._width / 2
+    tickSound = document.querySelector('audio')
+    timeData = {
+        seconds: 0, minutes: 0, hours: 0,
+        update() {
+            this.seconds = new Date().getSeconds()
+            this.minutes = new Date().getMinutes()
+            this.hours = new Date().getHours() - 12
+        }
+    }
 
     constructor(canvas) {
         if (canvas != null) {
@@ -117,17 +126,12 @@ class Clock {
     }
 
     startTicking() {
-        this.timeData = {
-            seconds: 0, minutes: 0, hours: 0,
-            update() {
-                this.seconds = new Date().getSeconds()
-                this.minutes = new Date().getMinutes()
-                this.hours = new Date().getHours() - 12
-            }
-        }
-
         this.updateClock()
-        setInterval(() => this.updateClock(), 1000)
+        this.interval = setInterval(() => this.updateClock(), 1000)
+    }
+
+    stopTicking() {
+        clearInterval(this.interval)
     }
 
     updateClock() {
@@ -135,7 +139,8 @@ class Clock {
         this.timeData.update()
         this.drawHands()
 
-        new Audio('tick1.mp3').play()
+        this.tickSound.currentTime = 0
+        this.tickSound.play()
     }
 
     drawHands() {
@@ -191,5 +196,6 @@ class Clock {
         this.ctx.fill()
     }
 }
+
 
 window.clock = new Clock(document.getElementById('clock'))
