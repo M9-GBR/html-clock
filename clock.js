@@ -1,7 +1,7 @@
 class Clock {
     _width = 500
     radius = this._width / 2
-    tickSound = document.querySelector('audio')
+    tickSound = new Audio('./tick.mp3')
     timeData = {
         seconds: 0, minutes: 0, hours: 0,
         update() {
@@ -21,6 +21,7 @@ class Clock {
         this.canvas.width = this._width
         this.canvas.height = this._width
 
+        this.soundInit()
         this.makeBody()
         this.startTicking()
     }
@@ -39,6 +40,17 @@ class Clock {
             this.makeBody()
             this.updateClock()
         } else console.error('Clock Width Too Small')
+    }
+
+    soundInit() {
+        this.canPlaySound = false
+
+        const enableSound = () => {
+            if (!this.canPlaySound) this.canPlaySound = true
+        }
+
+        document.addEventListener('pointerdown', enableSound)
+        document.addEventListener('keypress', enableSound)
     }
 
     makeBody() {
@@ -139,8 +151,7 @@ class Clock {
         this.timeData.update()
         this.drawHands()
 
-        this.tickSound.currentTime = 0
-        this.tickSound.play()
+        if (this.canPlaySound) this.tickSound.play()
     }
 
     drawHands() {
@@ -197,5 +208,4 @@ class Clock {
     }
 }
 
-
-window.clock = new Clock(document.getElementById('clock'))
+self.clock = new Clock(document.getElementById('clock'))
