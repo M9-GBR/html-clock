@@ -156,8 +156,8 @@ class Clock {
 
     drawHands() {
         // min-hand
-        let minAngle = (Math.PI * (((this.timeData.minutes * 60) + this.timeData.seconds) / 10 - 90) / 180)
-        let startX = this.radius - (this._width / 10) * Math.cos(minAngle),
+        let minAngle = (Math.PI * (((this.timeData.minutes * 60) + this.timeData.seconds) / 10 - 90) / 180),
+            startX = this.radius - (this._width / 10) * Math.cos(minAngle),
             startY = this.radius - (this._width / 10) * Math.sin(minAngle),
             endX = this.radius + (this._width / 2.4) * Math.cos(minAngle),
             endY = this.radius + (this._width / 2.4) * Math.sin(minAngle)
@@ -189,7 +189,7 @@ class Clock {
         endY = this.radius + (this._width / 2.5) * Math.sin(secAngle)
 
         this.ctx.strokeStyle = 'red'
-        this.ctx.lineWidth = 1
+        this.ctx.lineWidth = this._width / 200
         this.ctx.beginPath()
         this.ctx.moveTo(startX, startY)
         this.ctx.lineTo(endX, endY)
